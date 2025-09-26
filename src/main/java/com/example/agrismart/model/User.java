@@ -1,4 +1,4 @@
-package com.agrismart.model;
+package com.example.agrismart.model;
 
 import jakarta.persistence.*;
 import lombok.*;
