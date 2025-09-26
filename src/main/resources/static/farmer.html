@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AgriSmart Farmer Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h2 { color: green; }
+    input, select, button { padding: 5px; margin: 10px 0; }
+    .crop-info { margin-top: 20px; }
+  </style>
+</head>
+<body>
+<h2>Farmer Dashboard</h2>
+
+<h3>Step 1: Use GPS to fetch location</h3>
+<button onclick="getLocation()">Use My Location</button><br/><br/>
+Latitude: <input type="number" step="0.000001" id="latitude" readonly><br/>
+Longitude: <input type="number" step="0.000001" id="longitude" readonly><br/>
+
+<h3>Step 2: Select Crop Type</h3>
+<label for="cropSelect">Select Crop Type:</label>
+<select id="cropSelect">
+  <option value="">--Choose a crop--</option>
+  <option value="wheat">Wheat</option>
+  <option value="rice">Rice</option>
+  <option value="maize">Maize</option>
+  <option value="cotton">Cotton</option>
+  <option value="sugarcane">Sugarcane</option>
+</select>
+
+<button onclick="showCropInfo()">Show Recommendation</button>
+
+<div class="crop-info" id="cropInfo"></div>
+
+<script>
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          document.getElementById("latitude").value = position.coords.latitude;
+          document.getElementById("longitude").value = position.coords.longitude;
+          alert("Location fetched successfully!");
+        },
+        (error) => {
+          alert("Error fetching location: " + error.message);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by your browser.");
+    }
+  }
+
+  function showCropInfo() {
+    const crop = document.getElementById("cropSelect").value;
+    const lat = document.getElementById("latitude").value;
+    const lon = document.getElementById("longitude").value;
+    const infoDiv = document.getElementById("cropInfo");
+
+    if (!lat || !lon) {
+      alert("Please fetch your location first!");
+      return;
+    }
+
+    if (!crop) {
+      alert("Please select a crop type!");
+      return;
+    }
+
+    // Placeholder logic. Later, this will call your backend API.
+    let message = "";
+    switch(crop) {
+      case "wheat":
+        message = `Recommended sowing: Oct-Nov. Irrigation: Moderate. Optimal mandi near (${lat}, ${lon}).`;
+        break;
+      case "rice":
+        message = `Recommended sowing: Jun-Jul. Irrigation: High. Optimal mandi near (${lat}, ${lon}).`;
+        break;
+      case "maize":
+        message = `Recommended sowing: Feb-Mar. Irrigation: Low. Optimal mandi near (${lat}, ${lon}).`;
+        break;
+      case "cotton":
+        message = `Recommended sowing: Apr-May. Irrigation: Moderate. Optimal mandi near (${lat}, ${lon}).`;
+        break;
+      case "sugarcane":
+        message = `Recommended sowing: Feb-Mar. Irrigation: High. Optimal mandi near (${lat}, ${lon}).`;
+        break;
+      default:
+        message = "No recommendations available.";
+    }
+
+    infoDiv.innerHTML = `<strong>Recommendations for ${crop} at (${lat}, ${lon}):</strong> <br/> ${message}`;
+  }
+</script>
+
+</body>
+</html>

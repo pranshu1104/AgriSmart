@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <title>AgriSmart Login</title>
@@ -32,6 +32,50 @@
       .then(response => response.text())
       .then(alert)
       .catch(console.error);
+  }
+</script>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AgriSmart Login</title>
+  <style>
+    a.register-link { color: green; text-decoration: none; font-weight: bold; }
+    a.register-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<h2>Login</h2>
+<form id="loginForm">
+  Username: <input type="text" id="loginUsername" /><br/><br/>
+  Password: <input type="password" id="loginPassword" /><br/><br/>
+  <button type="button" onclick="login()">Login</button>
+</form>
+
+<p>Don't have an account? <a class="register-link" href="index.html">Register</a></p>
+
+<script>
+  function login() {
+    const data = {
+      username: document.getElementById("loginUsername").value,
+      password: document.getElementById("loginPassword").value
+    };
+
+    fetch("/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = "farmer.html";
+        } else {
+          response.text().then(msg => alert(msg));
+        }
+      })
+      .catch(err => console.error(err));
   }
 </script>
 </body>
