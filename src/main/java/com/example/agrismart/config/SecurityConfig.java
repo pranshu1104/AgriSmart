@@ -21,7 +21,7 @@ public class SecurityConfig {
       .authorizeHttpRequests(auth -> auth
         .requestMatchers("/auth/**").permitAll()
         .requestMatchers("/api/weather/**").permitAll()
-        .anyRequest().authenticated()
+        .anyRequest().permitAll()
       );
     return http.build();
   }

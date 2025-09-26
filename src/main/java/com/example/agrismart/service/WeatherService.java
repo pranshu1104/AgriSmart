@@ -1,10 +1,10 @@
 package com.example.agrismart.service;
 
-import com.example.agrismart.model.Farmer;
+import com.example.agrismart.model.User;
 import com.example.agrismart.model.mapper.WeatherMapper;
 import com.example.agrismart.model.weather.WeatherApiResponse;
 import com.example.agrismart.model.weather.WeatherResponseDto;
-import com.example.agrismart.repository.FarmerRepository;
+import com.example.agrismart.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class WeatherService {
 
   @Autowired
-  FarmerRepository farmerRepository;
+  private UserRepository userRepository; // use this name everywhere
+
 
   @Value("${weather.api.key}")
   private String apiKey;
@@ -26,9 +27,9 @@ public class WeatherService {
   private final RestTemplate restTemplate = new RestTemplate();
 
   public WeatherResponseDto getWeather(String username) {
-    Farmer farmer = farmerRepository.findByUsername(username)
+    User user = userRepository.findByUsername(username)
       .orElseThrow(() -> new RuntimeException("User not found"));
-    WeatherApiResponse weatherResponse = getWeatherByCity(farmer.getLocationCity());
+    WeatherApiResponse weatherResponse = getWeatherByCity(user.getLocationCity());
     WeatherResponseDto weatherResponseDto = WeatherMapper.mapToWeatherDto(weatherResponse,  new WeatherResponseDto());
     return weatherResponseDto;
   }

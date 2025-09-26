@@ -1,5 +1,5 @@
-package com.example.agrismart.model;
-
+//package com.example.agrismart.model;
+/*
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,4 +37,4 @@ public class Farmer {
   @Column(name = "location_state")
   private String locationState;
 }
-
+*/

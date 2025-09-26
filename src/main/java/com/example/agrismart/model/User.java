@@ -3,24 +3,20 @@ package com.example.agrismart.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")  // make sure this matches your DB table
+@Table(name = "users")  // table name
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, unique = true)
   private String username;
-
-  @Column(nullable = false)
   private String password;
-
-  @Column(name = "first_name")  // new
   private String firstName;
-
-  @Column(name = "last_name")   // new
   private String lastName;
+  private Double landArea;
+  private String soilType;
+  private String locationCity;  // <-- new field
 
   // Getters and setters
   public Long getId() { return id; }
@@ -37,4 +33,13 @@ public class User {
 
   public String getLastName() { return lastName; }
   public void setLastName(String lastName) { this.lastName = lastName; }
+
+  public Double getLandArea() { return landArea; }
+  public void setLandArea(Double landArea) { this.landArea = landArea; }
+
+  public String getSoilType() { return soilType; }
+  public void setSoilType(String soilType) { this.soilType = soilType; }
+
+  public String getLocationCity() { return locationCity; }  // <-- getter
+  public void setLocationCity(String locationCity) { this.locationCity = locationCity; } // setter
 }
