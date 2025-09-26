@@ -9,5 +9,5 @@ public class AgriSmartApplication {
   public static void main(String[] args) {
     SpringApplication.run(AgriSmartApplication.class, args);
   }
-
+        System.out.println("changes");
 }
