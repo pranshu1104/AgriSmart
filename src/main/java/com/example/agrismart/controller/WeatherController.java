@@ -2,7 +2,6 @@ package com.example.agrismart.controller;
 
 import com.example.agrismart.model.weather.WeatherResponseDto;
 import com.example.agrismart.service.WeatherService;
-import com.example.agrismart.repository.FarmerRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
