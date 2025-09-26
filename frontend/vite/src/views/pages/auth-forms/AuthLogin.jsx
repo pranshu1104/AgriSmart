@@ -14,13 +14,13 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
 // project imports
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import axiosClient from '../../../axios/axiosClient';
 
 // ===============================|| JWT - LOGIN ||=============================== //
 
@@ -28,6 +28,10 @@ export default function AuthLogin() {
   const theme = useTheme();
 
   const [checked, setChecked] = useState(true);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -38,11 +42,46 @@ export default function AuthLogin() {
     event.preventDefault();
   };
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleLogin = async () => {
+    try {
+      const res = await axiosClient.post("/auth/login", {
+        username: formData.email,
+        password: formData.password
+      });
+      const data = res.data;
+      console.log(data);
+
+      // Store the token if login is successful
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+        // You might want to redirect or update app state here
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Handle login error (show message to user)
+    }
+  }
+
+
   return (
     <>
       <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
         <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
-        <OutlinedInput id="outlined-adornment-email-login" type="email" value="info@codedthemes.com" name="email" />
+        <OutlinedInput
+          id="outlined-adornment-email-login"
+          type="email"
+          value={formData.email}
+          name="email"
+          onChange={handleInputChange}
+        />
       </FormControl>
 
       <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
@@ -50,8 +89,9 @@ export default function AuthLogin() {
         <OutlinedInput
           id="outlined-adornment-password-login"
           type={showPassword ? 'text' : 'password'}
-          value="123456"
+          value={formData.password}
           name="password"
+          onChange={handleInputChange}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -84,7 +124,7 @@ export default function AuthLogin() {
       </Grid>
       <Box sx={{ mt: 2 }}>
         <AnimateButton>
-          <Button color="secondary" fullWidth size="large" type="submit" variant="contained">
+          <Button color="secondary" onClick={handleLogin} fullWidth size="large" type="submit" variant="contained">
             Sign In
           </Button>
         </AnimateButton>
