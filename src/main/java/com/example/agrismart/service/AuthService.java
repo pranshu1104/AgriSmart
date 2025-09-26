@@ -30,7 +30,7 @@ public class AuthService {
     user.setLastName(request.getLastName());
     user.setSoilType(request.getSoilType());
     user.setLandArea(request.getLandArea());
-    user.setLocationCity("Gurugram");
+    user.setLocationCity("Gurgaon");
     user.setLocationState("Haryana");
     userRepository.save(user);
     return "User registered successfully!";
