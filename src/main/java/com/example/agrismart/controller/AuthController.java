@@ -1,7 +1,7 @@
 package com.example.agrismart.controller;
 
-import com.example.agrismart.model.RegisterRequest;
-import com.example.agrismart.model.LoginRequest;
+import com.example.agrismart.model.AuthDtos.RegisterRequest;
+import com.example.agrismart.model.AuthDtos.LoginRequest;
 import com.example.agrismart.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class AuthController {
 
   @PostMapping("/register")
   public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
-    return ResponseEntity.ok(authService.register(request.getUsername(), request.getPassword()));
+    return ResponseEntity.ok(authService.register(request));
   }
 
   @PostMapping("/login")
